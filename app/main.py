@@ -1,14 +1,13 @@
 from fastapi import FastAPI
-from sqlalchemy.ext.declarative import declarative_base
 
 from app.routers.auth import router as AuthBackend
 from app.routers.user import router as UserRouter
 from app import models
-from app import database
+from app.database import engine
 
-Base = declarative_base()
+
 # will create all the corresponding tables in the database based on models defined in model.py .
-models.Base.metadata.create_all(bind=database.engine)
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 

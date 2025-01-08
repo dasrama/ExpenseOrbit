@@ -1,13 +1,11 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey 
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
-from sqlalchemy.ext.declarative import declarative_base
 
-from app.database import database
+from app.database import Base 
 
-Base = declarative_base()
 
-class User(database.Base):
+class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, nullable=False)
