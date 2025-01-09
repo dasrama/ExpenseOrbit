@@ -9,7 +9,7 @@ from app.database import Base
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, nullable=False)
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     email = Column(String, nullable= False, unique=True )    
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True),nullable=False,server_default=text('now()'))
@@ -20,17 +20,21 @@ class User(Base):
 class Transaction(Base):
     __tablename__ = "transactions"
 
-    id=Column(Integer, nullable=False, primary_key=True)
+    id=Column(Integer, nullable=False, primary_key=True, autoincrement=True)
     description=Column(String, nullable=False, unique=True)
     amount=Column(Integer, nullable=False)
     date=Column(TIMESTAMP, nullable=False)
-    category=Column(String, nullable=False)
-    user_id=Column(Integer, nullable=False)
+    category_id=Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    category_id = Column(Integer, ForeignKey("categories.id", ondelete="SET NULL"), nullable=True)
+
+    category = relationship("Category")
+    user = relationship("User")
 
 class Category(Base):
     __tablename__ = "categories"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False, unique=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=True)  # Nullable for default categories
     is_default = Column(Boolean, default=False)  # Flag to indicate if a category is default

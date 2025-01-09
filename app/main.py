@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.routers.auth import router as AuthBackend
 from app.routers.user import router as UserRouter
 from app.routers.transaction import router as TransactionRouter
+from app.routers.category import router as CategoryRouter
 from app import models
 from app.database import engine
 from app.models import seed_default_categories
@@ -25,3 +26,4 @@ def on_startup():
 app.include_router(UserRouter, tags=["User"], prefix="/user")
 app.include_router(AuthBackend, tags=["Authentication"])
 app.include_router(TransactionRouter, tags=["Transaction"], prefix="/transaction")
+app.include_router(CategoryRouter, tags=["Category"], prefix="/category")

@@ -4,10 +4,9 @@ from datetime import datetime
 from typing import Optional
 
 class CreateTransaction(BaseModel):
-    id: int
     user_id: int
     amount: Decimal = Field(..., gt=0) 
-    category: str 
+    category_id: int
     date: datetime 
     description: Optional[str] = None
 
