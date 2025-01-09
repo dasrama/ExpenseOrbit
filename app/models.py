@@ -14,3 +14,15 @@ class User(Base):
     created_at = Column(TIMESTAMP(timezone=True),nullable=False,server_default=text('now()'))
 
     """ to define rollback condition if user enters invalid content to further prevent the count of id to original one"""
+
+class Transaction(Base):
+    __tablename__ = "transactions"
+
+    id=Column(Integer, nullable=False, primary_key=True)
+    description=Column(String, nullable=False, unique=True)
+    amount=Column(Integer, nullable=False)
+    date=Column(TIMESTAMP, nullable=False)
+    category=Column(String, nullable=False)
+    user_id=Column(Integer, nullable=False)
+
+

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from app.routers.auth import router as AuthBackend
 from app.routers.user import router as UserRouter
+from app.routers.transaction import router as TransactionRouter
 from app import models
 from app.database import engine
 
@@ -13,3 +14,4 @@ app = FastAPI()
 
 app.include_router(UserRouter, tags=["User"], prefix="/user")
 app.include_router(AuthBackend, tags=["Authentication"])
+app.include_router(TransactionRouter, tags=["Transaction"], prefix="/transaction")
