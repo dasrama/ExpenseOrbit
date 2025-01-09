@@ -1,6 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel
-from typing import Optional
+
 
 class DefaultCategory(Enum):
     FOOD = "Food"
@@ -8,7 +8,7 @@ class DefaultCategory(Enum):
     ENTERTAINMENT = "Entertainment"
     GROCERIES = "Groceries"
     TRANSPORT = "Transport"
-
+    SAVINGS = "savings"
 
 class CategoryCreate(BaseModel):
     name: str

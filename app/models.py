@@ -1,9 +1,10 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey 
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, Date
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Session, relationship
 
 from app.database import Base 
+from app.schemas.category import DefaultCategory 
 
 
 class User(Base):
@@ -14,6 +15,7 @@ class User(Base):
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True),nullable=False,server_default=text('now()'))
     categories = relationship("Category", back_populates="user", cascade="all, delete-orphan")
+    savings = relationship("SavingsGoal", back_populates="user", cascade="all, delete-orphan") 
 
     """ to define rollback condition if user enters invalid content to further prevent the count of id to original one"""
 
@@ -42,8 +44,20 @@ class Category(Base):
     user = relationship("User", back_populates="categories")
 
 
-from sqlalchemy.orm import Session
-from app.schemas.category import DefaultCategory 
+class SavingsGoal(Base):
+    __tablename__ = "savings"
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    name = Column(String, nullable=False)  
+    target_amount = Column(Float, nullable=False) 
+    target_date = Column(Date, nullable=False) 
+    created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
+    is_completed = Column(Boolean, default=False)  
+
+    user = relationship("User", back_populates="savings")
+
+
 
 def seed_default_categories(db: Session):
     for category in DefaultCategory:
