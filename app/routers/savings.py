@@ -4,15 +4,16 @@ from sqlalchemy import func
 from typing import List
 
 from app.database import get_db
-from app.models import SavingsGoal, Transaction
+from app.auth.oauth2 import get_current_user
+from app.models import SavingsGoal, Transaction, User
 from app.schemas.savings import CreateSavingsGoal, SavingsGoalResponse
 
 router = APIRouter()
 
 @router.post("/", response_model=SavingsGoalResponse)
-def create_savings_goal(goal: CreateSavingsGoal, db: Session = Depends(get_db), user_id: int = 1):
+def create_savings_goal(goal: CreateSavingsGoal, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     new_goal = SavingsGoal(
-        user_id=user_id,
+        user_id=current_user.id,
         name=goal.name,
         target_amount=goal.target_amount,
         target_date=goal.target_date,
@@ -24,11 +25,11 @@ def create_savings_goal(goal: CreateSavingsGoal, db: Session = Depends(get_db), 
 
 
 @router.get("/", response_model=List[SavingsGoalResponse])
-def get_savings_goals(db: Session = Depends(get_db), user_id: int = 1):
-    goals = db.query(SavingsGoal).filter(SavingsGoal.user_id == user_id).all()
+def get_savings_goals(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    goals = db.query(SavingsGoal).filter(SavingsGoal.user_id == current_user.id).all()
     for goal in goals:
         total_saved = db.query(func.sum(Transaction.amount)).filter(
-            Transaction.user_id == user_id,
+            Transaction.user_id == current_user.id,
             Transaction.category == "Savings",
             Transaction.date <= goal.target_date
         ).scalar() or 0
@@ -38,8 +39,8 @@ def get_savings_goals(db: Session = Depends(get_db), user_id: int = 1):
 
 
 @router.put("/{goal_id}/complete", response_model=SavingsGoalResponse)
-def complete_savings_goal(goal_id: int, db: Session = Depends(get_db), user_id: int = 1):
-    goal = db.query(SavingsGoal).filter(SavingsGoal.id == goal_id, SavingsGoal.user_id == user_id).first()
+def complete_savings_goal(goal_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    goal = db.query(SavingsGoal).filter(SavingsGoal.id == goal_id, SavingsGoal.user_id == current_user).first()
     if not goal:
         raise HTTPException(status_code=404, detail="Savings goal not found")
     
