@@ -56,8 +56,7 @@ class SavingsGoal(Base):
     is_completed = Column(Boolean, default=False)  
 
     user = relationship("User", back_populates="savings")
-
-
+    
 
 def seed_default_categories(db: Session):
     for category in DefaultCategory:
