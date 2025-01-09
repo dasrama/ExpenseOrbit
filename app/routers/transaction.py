@@ -39,10 +39,10 @@ def transaction(transaction: CreateTransaction, db: Session = Depends(get_db), c
     }
 
 
-@router.get("/{transaction_id}")
-def get_transaction(transaction_id, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    transaction = db.query(Transaction).filter(transaction_id==Transaction.id, Transaction.user_id==current_user.id).first()
-    return transaction
+@router.get("/")
+def get_transaction(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    transactions = db.query(Transaction).filter(Transaction.user_id==current_user.id).all()
+    return transactions
 
 
 @router.delete("/{transaction_id}", status_code=status.HTTP_204_NO_CONTENT)
