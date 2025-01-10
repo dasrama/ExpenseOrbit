@@ -35,8 +35,8 @@ ExpenseOrbit is a comprehensive personal finance management system designed to h
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/expenseorbit.git
-   cd expenseorbit
+   git clone [https://github.com/your-repo/expenseorbit.git](https://github.com/dasrama/ExpenseOrbit.git)
+   cd ExpenseOrbit
    ```
 
 2. Set up a virtual environment and install dependencies:
@@ -63,17 +63,12 @@ ExpenseOrbit is a comprehensive personal finance management system designed to h
      SECRET_KEY=your_secret_key
      ```
 
-4. Run database migrations:
-   ```bash
-   alembic upgrade head
-   ```
-
-5. Start the FastAPI server:
+4. Start the FastAPI server:
    ```bash
    uvicorn app.main:app --reload
    ```
 
-6. Access the API documentation:
+5. Access the API documentation:
    Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) in your browser.
 
 ## API Endpoints
@@ -100,7 +95,7 @@ ExpenseOrbit is a comprehensive personal finance management system designed to h
 ## Project Structure
 
 ```
-expenseorbit/
+ExpenseOrbit/
 ├── app/
 │   ├── auth/
 │   ├── database.py
@@ -118,11 +113,8 @@ expenseorbit/
 │   │   └── savings.py
 │   └── utils/
 │       └── hash.py
-├── alembic/
 ├── tests/
 ├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
 └── README.md
 ```
 
@@ -130,5 +122,5 @@ expenseorbit/
 ## Contact
 
 For inquiries or support, contact:
-- **Email**: your-email@example.com
-- **GitHub**: [your-github-profile](https://github.com/your-profile)
+- **Email**: ramaprasad047@example.com
+- **GitHub**: [https://github.com/your-profile](https://github.com/dasrama/)
