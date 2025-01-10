@@ -82,7 +82,7 @@ To run the tests, follow these steps:
 
 2. Run the tests:
    ```bash
-   pytest
+   pytest -v --disable-warnings
    ```
 
 ## API Endpoints
