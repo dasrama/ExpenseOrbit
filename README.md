@@ -1,35 +1,34 @@
-# ExpenseOrbit
+# ExpenseOrbit 🚀
 
 ExpenseOrbit is a comprehensive personal finance management system designed to help users efficiently track their transactions, set savings goals, and manage expenses. Built with FastAPI, SQLAlchemy, and PostgreSQL, it offers a robust and user-friendly interface for financial organization.
 
-## Features
+## Features ✨
 
-### User Management
+### User Management 👤
 - **Create Users**: Securely register users with hashed passwords.
 - **Authentication**: Secure login using OAuth2.
 
-### Transactions
+### Transactions 💳
 - **Add Transactions**: Record income or expenses with categorized details.
 - **View Transactions**: Retrieve all transactions for the current user.
 - **Update Transactions**: Modify existing transaction details.
 - **Delete Transactions**: Remove transactions securely.
 
-### Categories
+### Categories 🗂️
 - **Create Categories**: Define custom categories for organizing transactions.
 - **View Categories**: Retrieve all user-defined categories.
 - **Delete Categories**: Remove unused categories.
 
-### Savings Goals
+### Savings Goals 🎯
 - **Create Savings Goals**: Define target amounts and deadlines.
 - **Track Progress**: Monitor savings progress dynamically based on transactions.
 - **Mark Goals as Complete**: Complete and archive savings goals.
 
-## Tech Stack
+## Tech Stack 🛠️
 
 - **Backend**: FastAPI
 - **Database**: PostgreSQL (SQLAlchemy ORM)
 - **Authentication**: OAuth2 with JWT Tokens
-- **Deployment**: Docker, Nginx
 
 ## Installation
 
@@ -73,26 +72,27 @@ ExpenseOrbit is a comprehensive personal finance management system designed to h
 
 ## API Endpoints
 
-### User Management
+
+### User Management 👤
 - `POST /users/`: Register a new user.
 
-### Transactions
+### Transactions 💳
 - `POST /transactions/`: Add a new transaction.
 - `GET /transactions/`: Retrieve all transactions.
 - `PUT /transactions/{transaction_id}`: Update a transaction.
 - `DELETE /transactions/{transaction_id}`: Delete a transaction.
 
-### Categories
+### Categories 🗂️
 - `POST /categories/`: Create a new category.
 - `GET /categories/`: Retrieve all categories.
 - `DELETE /categories/{category_id}`: Delete a category.
 
-### Savings Goals
+### Savings Goals 🎯
 - `POST /savings/`: Create a new savings goal.
 - `GET /savings/`: Retrieve all savings goals.
 - `PUT /savings/{goal_id}/complete`: Mark a savings goal as complete.
 
-## Project Structure
+## Project Structure 🏗️
 
 ```
 ExpenseOrbit/
