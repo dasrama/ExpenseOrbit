@@ -69,9 +69,23 @@ ExpenseOrbit is a comprehensive personal finance management system designed to h
 
 5. Access the API documentation:
    Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) in your browser.
+   
+
+## Testing Environment 🧪
+
+To run the tests, follow these steps:
+
+1. Install pytest:
+   ```bash
+   pip install pytest
+   ```
+
+2. Run the tests:
+   ```bash
+   pytest
+   ```
 
 ## API Endpoints
-
 
 ### User Management 👤
 - `POST /users/`: Register a new user.
@@ -114,6 +128,10 @@ ExpenseOrbit/
 │   └── utils/
 │       └── hash.py
 ├── tests/
+|   ├── test_user.py
+|   ├── test_transaction.py
+|   ├── test_savings.py
+|   ├── test_categories.py
 ├── config.py
 ├── database.py
 ├── main.py
@@ -121,6 +139,9 @@ ExpenseOrbit/
 ├── requirements.txt
 └── README.md
 ```
+
+
+
 
 
 ## Contact
