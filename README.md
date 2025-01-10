@@ -140,7 +140,9 @@ ExpenseOrbit/
 └── README.md
 ```
 
-## sample tests are in progress
+### Sample Tests 🧪💥 : Hold on tight! 🎢 The sample tests are in progress
+
+
 
 
 
