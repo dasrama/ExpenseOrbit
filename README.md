@@ -34,7 +34,7 @@ ExpenseOrbit is a comprehensive personal finance management system designed to h
 
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/your-repo/expenseorbit.git](https://github.com/dasrama/ExpenseOrbit.git)
+   
    cd ExpenseOrbit
    ```
 
@@ -122,5 +122,5 @@ ExpenseOrbit/
 ## Contact
 
 For inquiries or support, contact:
-- **Email**: ramaprasad047@example.com
-- **GitHub**: [https://github.com/your-profile](https://github.com/dasrama/)
+- **Email**: ramaprasad047@gmail.com
+- **GitHub**: [https://github.com/dasrama](https://github.com/dasrama)
