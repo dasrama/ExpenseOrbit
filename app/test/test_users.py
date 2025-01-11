@@ -1,5 +1,6 @@
 from fastapi import status
 from fastapi.testclient import TestClient
+import pytest
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
@@ -11,20 +12,25 @@ SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.DATABASE_USERNAME}:{settings.
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TesingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base.metadata.create_all(bind=engine)
 
-def overrid_get_db():
+def override_get_db():
     db = TesingSessionLocal()
     try:
         yield db
     finally:
         db.close()
 
-app.dependency_overrides[get_db] = overrid_get_db
+app.dependency_overrides[get_db] = override_get_db
 
-client = TestClient(app=app)
+@pytest.fixture
+def client():
+    Base.metadata.drop_all(bind=engine)  
+    Base.metadata.create_all(bind=engine)
+    return TestClient(app=app)
 
-def test_user():
+# client = TestClient(app=app)
+
+def test_user(client):
     response = client.post("/user/", json={"email": "hello@gmail.com", "password": "12345"})
     new_user = CreateUserResponse(**response.json())
     assert new_user.email == "hello@gmail.com"
