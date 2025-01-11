@@ -69,6 +69,8 @@ ExpenseOrbit is a comprehensive personal finance management system designed to h
 
 5. Access the API documentation:
    Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) in your browser.
+
+
    
 
 ## Testing Environment 🧪
@@ -84,6 +86,28 @@ To run the tests, follow these steps:
    ```bash
    pytest -v --disable-warnings
    ```
+   
+
+## Postman Collection 📬
+
+To test the APIs using Postman:
+
+1. Import the Postman collection:
+   - Download the Postman collection file: [ExpenseOrbit.postman_collection.json](./ExpenseOrbit.postman_collection.json)
+   - Open Postman and click on "Import".
+   - Select the downloaded file and import it.
+
+2. Set up the environment:
+   - Go to "Environments" in Postman.
+   - Create a new environment with the following variable:
+     - **Key**: `base_url`
+     - **Value**: `http://127.0.0.1:8000`
+
+3. Run the requests:
+   - Select the desired API request from the imported collection.
+   - Ensure the `base_url` variable is correctly set to point to your running FastAPI server.
+
+
 
 ## API Endpoints
 
