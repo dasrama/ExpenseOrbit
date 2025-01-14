@@ -47,15 +47,16 @@ class Category(Base):
 class SavingsGoal(Base):
     __tablename__ = "savings"
 
-    id = Column(Integer, primary_key=True, nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    name = Column(String, nullable=False)
+    target_amount = Column(Float, nullable=False)
+    saved_amount = Column(Float, default=0.0) 
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
-    name = Column(String, nullable=False)  
-    target_amount = Column(Float, nullable=False) 
-    target_date = Column(Date, nullable=False) 
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
-    is_completed = Column(Boolean, default=False)  
+    target_date = Column(Date, nullable=True) 
 
     user = relationship("User", back_populates="savings")
+
     
 
 def seed_default_categories(db: Session):

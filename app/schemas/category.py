@@ -8,7 +8,7 @@ class DefaultCategory(Enum):
     ENTERTAINMENT = "Entertainment"
     GROCERIES = "Groceries"
     TRANSPORT = "Transport"
-    SAVINGS = "savings"
+    SAVINGS = "Savings"
 
 class CategoryCreate(BaseModel):
     name: str
