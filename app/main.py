@@ -24,8 +24,8 @@ def on_startup():
         seed_default_categories(db)
 
 
-app.include_router(UserRouter, tags=["User"], prefix="/user")
+app.include_router(UserRouter, tags=["User"], prefix="/users")
 app.include_router(AuthBackend, tags=["Authentication"])
-app.include_router(TransactionRouter, tags=["Transaction"], prefix="/transaction")
-app.include_router(CategoryRouter, tags=["Category"], prefix="/category")
+app.include_router(TransactionRouter, tags=["Transaction"], prefix="/transactions")
+app.include_router(CategoryRouter, tags=["Category"], prefix="/categories")
 app.include_router(SavingsRouter, tags=["Savings"], prefix="/savings")
