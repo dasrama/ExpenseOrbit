@@ -202,7 +202,7 @@
 					"response": []
 				},
 				{
-					"name": "Saving Goal Completion",
+					"name": "Update Saving Goal",
 					"request": {
 						"method": "PUT",
 						"header": []
@@ -214,6 +214,47 @@
 					"request": {
 						"method": "POST",
 						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Saving progress",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Saving Goal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MzY4NDUyNTJ9.mKTXvt8uC8ZsAefkfmBYBeMr0bmm79itstmJwzcn3_g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/savings/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"savings",
+								"3"
+							]
+						}
 					},
 					"response": []
 				}
