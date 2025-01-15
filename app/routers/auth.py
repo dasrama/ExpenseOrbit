@@ -20,10 +20,10 @@ def login(user_credentials : OAuth2PasswordRequestForm = Depends(), db : Session
     user = db.query(User).filter(user_credentials.username == User.email).first()
      
     if not user:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail= "invalid user credentials")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail= "Invalid User Credentials")
     
     if not hash.verify(plain_password= user_credentials.password,hashed_password= user.password):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="invalid credentials")
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid Credentials")
 
     access_token = create_access_token(data= {"user_id": user.id})
 
