@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, Date
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, Date, Enum
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
 from sqlalchemy.orm import Session, relationship
+from enum import Enum as pyEnum
 
 from app.database import Base 
 from app.schemas.category import DefaultCategory 
@@ -19,19 +20,25 @@ class User(Base):
 
     """ to define rollback condition if user enters invalid content to further prevent the count of id to original one"""
 
+class TransactionType(pyEnum):
+    INCOME="income"
+    SAVINGS="savings"
+    EXPENSE="expense"
+
 class Transaction(Base):
     __tablename__ = "transactions"
 
     id=Column(Integer, nullable=False, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    type = Column(Enum(TransactionType), nullable=False)
     description=Column(String, nullable=False, unique=True)
     amount=Column(Integer, nullable=False)
-    date=Column(TIMESTAMP, nullable=False)
-    category_id=Column(String, nullable=False)
-    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     category_id = Column(Integer, ForeignKey("categories.id", ondelete="SET NULL"), nullable=True)
-
+    date=Column(TIMESTAMP, nullable=False)
+    
     category = relationship("Category")
     user = relationship("User")
+
 
 class Category(Base):
     __tablename__ = "categories"
@@ -57,7 +64,6 @@ class SavingsGoal(Base):
 
     user = relationship("User", back_populates="savings")
 
-    
 
 def seed_default_categories(db: Session):
     for category in DefaultCategory:

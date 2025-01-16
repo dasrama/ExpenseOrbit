@@ -23,5 +23,5 @@ def test_login_user(client):
 def test_incorrect_user(client, email, password, status_code):
     response = client.post("/login", data={"username": email, "password": password})
     assert response.status_code==status_code
-    # assert response.json().get("detail")=="Invalid User Credentials"    
+   
 
