@@ -1,4 +1,5 @@
 documentation/
+logs/
 venv/
 .env
 __pycache__/
