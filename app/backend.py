@@ -10,19 +10,28 @@ from app.routers.transaction import router as TransactionRouter
 from app.routers.category import router as CategoryRouter
 from app.routers.savings import router as SavingsRouter
 from app.routers.report import router as ReportRouter
+from app.utils.logger import Logger
 
 
 # will create all the corresponding tables in the database based on models defined in model.py .
 # models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+logging = Logger().logger
+
 
 @app.on_event("startup")
 def on_startup():
+    logging.info("---startup application---")
     models.Base.metadata.create_all(bind=engine)
 
     with Session(engine) as db:
         seed_default_categories(db)
+
+
+@app.on_event("shutdown")
+def on_shutdown():
+    logging.info("---shutdown application---")        
 
 
 app.include_router(UserRouter, tags=["User"], prefix="/users")

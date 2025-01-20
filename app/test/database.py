@@ -4,7 +4,7 @@ import pytest
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
-from app.main import app
+from app.backend import app
 from app.database import settings, get_db, Base
 
 SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOST}:{settings.DATABASE_PORT}/expenseorbit_test'

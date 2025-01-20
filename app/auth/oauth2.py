@@ -9,9 +9,11 @@ from app.database import get_db
 from app.models import User
 from app.schemas.auth import Token, TokenData
 from app.config import Settings
+from app.utils.logger import Logger
 
 
 settings = Settings()
+logging = Logger().logger
 
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
@@ -33,6 +35,7 @@ def create_access_token(data: dict) -> Token:
 
 def verify_access_token(token: str, credential_exception) -> TokenData:
     try:
+        logging.info("Credential --> %s", token)
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         id: str = payload.get("user_id")
 

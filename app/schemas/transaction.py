@@ -7,6 +7,7 @@ class CreateTransaction(BaseModel):
     user_id: int
     amount: Decimal = Field(..., gt=0) 
     category_id: int
+    type: str
     date: datetime  # yyyy-dd-mm
     description: Optional[str] = None
     
