@@ -13,7 +13,7 @@ from app.utils.logger import Logger
 
 
 settings = Settings()
-logging = Logger().logger
+logging = Logger.get_instance()
 
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="login")
 

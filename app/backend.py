@@ -17,7 +17,7 @@ from app.utils.logger import Logger
 # models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-logging = Logger().logger
+logging = Logger.get_instance()
 
 
 @app.on_event("startup")
@@ -31,7 +31,7 @@ def on_startup():
 
 @app.on_event("shutdown")
 def on_shutdown():
-    logging.info("---shutdown application---")        
+    logging.info("---shutdown application---")    
 
 
 app.include_router(UserRouter, tags=["User"], prefix="/users")

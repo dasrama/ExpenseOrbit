@@ -9,7 +9,7 @@ from app.models import Transaction, Category, User
 from app.utils.logger import Logger
 
 router  = APIRouter()
-logging = Logger().logger
+logging = Logger.get_instance()
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
