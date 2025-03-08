@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from app import models
@@ -10,6 +11,7 @@ from app.routers.transaction import router as TransactionRouter
 from app.routers.category import router as CategoryRouter
 from app.routers.savings import router as SavingsRouter
 from app.routers.report import router as ReportRouter
+from discord_bot.auth.oauth import router as DiscordRouter
 from app.utils.logger import Logger
 
 
@@ -17,6 +19,17 @@ from app.utils.logger import Logger
 # models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 logging = Logger.get_instance()
 
 
@@ -40,3 +53,4 @@ app.include_router(TransactionRouter, tags=["Transaction"], prefix="/transaction
 app.include_router(CategoryRouter, tags=["Category"], prefix="/categories")
 app.include_router(SavingsRouter, tags=["Savings"], prefix="/savings")
 app.include_router(ReportRouter, tags=["Report"], prefix="/reports")
+app.include_router(DiscordRouter, tags=["Discord Server"], prefix="/discord")
