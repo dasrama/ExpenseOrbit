@@ -55,7 +55,7 @@ async def discord_auth_callback(request: Request, db: Session = Depends(get_db))
 
     if not user:
         # If user does not exist, create a new entry with a random email
-        user = User(discord_id=discord_id, email=f"{discord_id}@discord.com")
+        user = User(discord_id=discord_id)
         db.add(user)
         db.commit()
         db.refresh(user)

@@ -15,7 +15,7 @@ async def on_ready():
 
 @bot.command()
 async def login(ctx):
-    oauth_url = "https://discord.com/oauth2/authorize?client_id={Config.CLIENT_ID}&response_type=code&redirect_uri={Config.REDIRECT_URI}&scope=guilds+identify"
+    oauth_url = f"https://discord.com/oauth2/authorize?client_id={Config.CLIENT_ID}&response_type=code&redirect_uri={Config.REDIRECT_URI}&scope=guilds+identify"
     await ctx.send(f"🔐 Click here to login: {oauth_url}")
 
 @bot.command()
