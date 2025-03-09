@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, Date, Enum
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, Date, Enum, BigInteger, CheckConstraint
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
 from sqlalchemy.orm import Session, relationship
@@ -12,11 +12,20 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    email = Column(String, nullable= False, unique=True )    
-    password = Column(String, nullable=False)
+    discord_id = Column(BigInteger, unique=True, nullable=True)
+    email = Column(String, unique=True)    
+    password = Column(String)
     created_at = Column(TIMESTAMP(timezone=True),nullable=False,server_default=text('now()'))
     categories = relationship("Category", back_populates="user", cascade="all, delete-orphan")
     savings = relationship("SavingsGoal", back_populates="user", cascade="all, delete-orphan") 
+
+    __table_args__ = (
+        CheckConstraint(
+            "(discord_id IS NOT NULL AND email IS NULL AND password IS NULL) OR "
+            "(discord_id IS NULL AND email IS NOT NULL AND password IS NOT NULL)",
+            name="check_user_authentication"
+        ),
+    )
 
     """ to define rollback condition if user enters invalid content to further prevent the count of id to original one"""
 
