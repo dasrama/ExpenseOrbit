@@ -1,28 +1,19 @@
 import httpx
 from fastapi import APIRouter, HTTPException, Request, Depends
 from fastapi.responses import RedirectResponse
-import urllib.parse
 from sqlalchemy.orm import Session
+import urllib.parse
 
 from app.models import User
 from app.database import get_db
 from app.auth.oauth2 import create_access_token
-from dotenv import load_dotenv
-import os
+from discord_bot.config import Config
 
-load_dotenv("discord_bot/.env")
 
 router = APIRouter()
 
-CLIENT_ID = os.getenv("CLIENT_ID")
-REDIRECT_URI = os.getenv("REDIRECT_URI") 
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-GUILD_ID = os.getenv("GUILD_ID")
-
-
 @router.get("/auth/callback")
 async def discord_auth_callback(request: Request, db: Session = Depends(get_db)):
-    """Handles Discord OAuth2 authentication and issues a JWT token."""
     code = request.query_params.get("code")
 
     if not code:
@@ -32,11 +23,11 @@ async def discord_auth_callback(request: Request, db: Session = Depends(get_db))
         response = await client.post(
             "https://discord.com/api/oauth2/token",
             data={
-                "client_id": CLIENT_ID,
-                "client_secret": CLIENT_SECRET,
+                "client_id": Config.CLIENT_ID,
+                "client_secret": Config.CLIENT_SECRET,
                 "grant_type": "authorization_code",
                 "code": code,
-                "redirect_uri": REDIRECT_URI
+                "redirect_uri": Config.REDIRECT_URI
             },
             headers={"Content-Type": "application/x-www-form-urlencoded"},
         )
@@ -49,7 +40,6 @@ async def discord_auth_callback(request: Request, db: Session = Depends(get_db))
 
     access_token = data["access_token"]
 
-    # Fetch user information from Discord
     async with httpx.AsyncClient() as client:
         user_response = await client.get(
             "https://discord.com/api/users/@me",
@@ -61,7 +51,6 @@ async def discord_auth_callback(request: Request, db: Session = Depends(get_db))
     
     username = user_data["username"] # to be used later
 
-    # Check if user already exists
     user = db.query(User).filter(User.discord_id == discord_id).first()
 
     if not user:
@@ -71,11 +60,10 @@ async def discord_auth_callback(request: Request, db: Session = Depends(get_db))
         db.commit()
         db.refresh(user)
 
-    # Generate JWT token
     jwt_token = create_access_token({"user_id": user.id})
-    # Redirect the user back to Discord with the token
     encoded_token = urllib.parse.quote(jwt_token)
-    bot_command_url = f"https://discord.com/channels/{GUILD_ID}?jwt_token={encoded_token}"
+    bot_command_url = f"https://discord.com/channels/{Config.GUILD_ID}?jwt_token={encoded_token}"
+
     return RedirectResponse(bot_command_url)
 
     #return {"message": "Discord login successful!", "jwt_token": jwt_token, "user_id": user.id}
